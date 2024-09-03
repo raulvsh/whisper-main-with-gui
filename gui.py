@@ -50,15 +50,20 @@ class WhisperApp:
 
         # Define la función de callback para mostrar el mensaje de finalización
         def on_completion():
-            self.output_text.insert(tk.END, "\nPROCESO COProceso completado\n", "completion")
+            self.output_text.insert(tk.END, "\n" + self.center_text("Proceso completado") + "\n", "completion")
             self.output_text.see(tk.END)
             self.output_text.update()
-            #self.completion_label.config(text="Proceso completado")
         
         run_whisper_command(file_path, self.output_text, on_completion)
 
-    def update_completion_label(self):
-        self.completion_label.config(text="Proceso completado", fg="green")
+    def center_text(self, text):
+        # Calcula el ancho del cuadro de texto y el texto
+        width = self.output_text.winfo_width()
+        text_width = len(text) * 8  # Aproximación del ancho del texto en píxeles (ajusta según sea necesario)
+        
+        # Calcula el número de espacios necesarios para centrar el texto
+        spaces_needed = max((width - text_width) // 2, 0)
+        return " " * spaces_needed + text
 
     def run(self):
         self.root.mainloop()
