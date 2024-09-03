@@ -31,9 +31,9 @@ class WhisperApp:
         # Cuadro de texto para la salida
         self.output_text = tk.Text(text_frame, width=150, height=45)  # Aproximación de tamaño
         self.output_text.pack(pady=10, fill=tk.BOTH, expand=True)
-        
+
         # Configurar la etiqueta de estilo para el mensaje de finalización
-        self.output_text.tag_configure("completion", foreground="green", font=("Arial", 10, "bold"))
+        self.output_text.tag_configure("completion", foreground="green", font=("Arial", 20, "bold"))
 
     def select_file(self):
         # Abrir explorador de archivos para seleccionar archivo de audio
@@ -50,20 +50,11 @@ class WhisperApp:
 
         # Define la función de callback para mostrar el mensaje de finalización
         def on_completion():
-            self.output_text.insert(tk.END, "\n" + self.center_text("Proceso completado") + "\n", "completion")
+            self.output_text.insert(tk.END, "\n PROCESO COMPLETADO", "completion")
             self.output_text.see(tk.END)
             self.output_text.update()
         
         run_whisper_command(file_path, self.output_text, on_completion)
-
-    def center_text(self, text):
-        # Calcula el ancho del cuadro de texto y el texto
-        width = self.output_text.winfo_width()
-        text_width = len(text) * 8  # Aproximación del ancho del texto en píxeles (ajusta según sea necesario)
-        
-        # Calcula el número de espacios necesarios para centrar el texto
-        spaces_needed = max((width - text_width) // 2, 0)
-        return " " * spaces_needed + text
 
     def run(self):
         self.root.mainloop()

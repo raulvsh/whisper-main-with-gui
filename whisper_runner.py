@@ -47,8 +47,6 @@ def run_whisper_command(file_path, output_widget, on_completion):
 
         finally:
             # Asegúrate de que el proceso se cierre correctamente
-            output_widget.insert("end", "llego a finally\n")
-
             if process.poll() is None:  # Verifica si el proceso sigue en ejecución
                 process.terminate()  # Termina el proceso si aún está en ejecución
                 output_widget.insert("end", "llego a terminate\n")
@@ -56,8 +54,6 @@ def run_whisper_command(file_path, output_widget, on_completion):
 
             # Llama al callback de finalización
             if on_completion:
-                #on_completion()
-                output_widget.insert("end", "llego a on completion\n")
                 output_widget.after(0, on_completion)
 
 
