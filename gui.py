@@ -50,7 +50,7 @@ class WhisperApp:
 
         # Define la función de callback para mostrar el mensaje de finalización
         def on_completion():
-            self.output_text.insert(tk.END, "\n PROCESO COMPLETADO", "completion")
+            self.output_text.insert(tk.END, "\n PROCESO COMPLETADO\n", "completion")
             self.output_text.see(tk.END)
             self.output_text.update()
         
