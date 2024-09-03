@@ -38,7 +38,10 @@ class WhisperApp:
     def select_file(self):
         # Abrir explorador de archivos para seleccionar archivo de audio
         file_path = filedialog.askopenfilename(
-            filetypes=[("Audio Files", "*.mp3 *.wav *.m4a *.flac *.ogg")]
+            filetypes=[
+                ("Audio Files", "*.mp3 *.wav *.m4a *.flac *.ogg"),
+                ("Video Files", "*.mp4 *.avi *.mkv")
+            ]
         )
         if file_path:
             self.run_whisper(file_path)
