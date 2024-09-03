@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import filedialog, scrolledtext
+from tkinter import filedialog
 from whisper_runner import run_whisper_command
 
 class WhisperApp:
@@ -10,26 +10,35 @@ class WhisperApp:
 
     def setup_ui(self):
         # Configuración de la ventana principal
-        self.root.geometry("1300x800")  # Un poco más grande para incluir márgenes y otros elementos
-        
+        self.root.geometry("1300x800")  # Tamaño de la ventana principal
+
+        # Configuración del diseño principal
+        main_frame = tk.Frame(self.root)
+        main_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=20)  # Añade márgenes a los lados y arriba/abajo
+
         # Título
-        title_label = tk.Label(self.root, text="Whisper", font=("Arial", 16))
+        title_label = tk.Label(main_frame, text="Whisper", font=("Arial", 16))
         title_label.pack(pady=10)
 
         # Botón "Seleccionar archivo"
-        select_button = tk.Button(self.root, text="Seleccionar archivo", command=self.select_file)
+        select_button = tk.Button(main_frame, text="Seleccionar archivo", command=self.select_file)
         select_button.pack(pady=10)
 
-        # Cuadro de texto para la salida con tamaño 1280x720 px
-        self.output_text = tk.Text(self.root, width=150, height=45)  # Ajuste de tamaño basado en aproximación de píxeles
-        self.output_text.pack(pady=10)
+        # Frame para el cuadro de texto con márgenes laterales
+        text_frame = tk.Frame(main_frame)
+        text_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-        # Fijar el tamaño del cuadro de texto
-        self.output_text.config(width=128, height=45)  # Ajuste aproximado para llegar a 1280x720
+        # Cuadro de texto para la salida
+        self.output_text = tk.Text(text_frame, width=150, height=45)  # Aproximación de tamaño
+        self.output_text.pack(pady=10, fill=tk.BOTH, expand=True)
+
+        # Frame para el mensaje de finalización
+        self.completion_frame = tk.Frame(main_frame, bg="lightgray", height=80)  # Ajustado para ser más alto
+        self.completion_frame.pack(fill=tk.X, pady=(10, 10), side=tk.BOTTOM)
         
         # Etiqueta para el mensaje de finalización
-        self.completion_label = tk.Label(self.root, text="", fg="green", font=("Arial", 12))
-        self.completion_label.pack(pady=10)
+        self.completion_label = tk.Label(self.completion_frame, text="", fg="green", font=("Arial", 12), bg="lightgray")
+        self.completion_label.pack(pady=10, padx=10, anchor=tk.W, fill=tk.X)
 
     def select_file(self):
         # Abrir explorador de archivos para seleccionar archivo de audio

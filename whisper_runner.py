@@ -1,6 +1,7 @@
 import subprocess
 import threading
 import os
+import ctypes
 
 def run_whisper_command(file_path, output_widget, on_completion):
     def execute():
@@ -18,7 +19,13 @@ def run_whisper_command(file_path, output_widget, on_completion):
             "--output_format", "txt", 
             "--output_dir", output_dir
         ]
-        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+        # Crear el objeto de proceso con CREATE_NO_WINDOW
+        startup_info = subprocess.STARTUPINFO()
+        startup_info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        startup_info.wShowWindow = subprocess.SW_HIDE
+
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, startupinfo=startup_info)
 
         # Lee la salida del comando línea por línea
         for line in iter(process.stdout.readline, ''):
