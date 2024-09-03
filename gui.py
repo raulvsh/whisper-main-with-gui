@@ -31,10 +31,6 @@ class WhisperApp:
         # Cuadro de texto para la salida
         self.output_text = tk.Text(text_frame, width=150, height=45)  # Aproximación de tamaño
         self.output_text.pack(pady=10, fill=tk.BOTH, expand=True)
-
-        # Frame para el mensaje de finalización
-        #self.completion_frame = tk.Frame(main_frame, bg="lightgray", height=80)  # Ajustado para ser más alto
-        #self.completion_frame.pack(fill=tk.X, pady=(10, 10), side=tk.BOTTOM)
         
         # Configurar la etiqueta de estilo para el mensaje de finalización
         self.output_text.tag_configure("completion", foreground="green", font=("Arial", 10, "bold"))
@@ -54,7 +50,7 @@ class WhisperApp:
 
         # Define la función de callback para mostrar el mensaje de finalización
         def on_completion():
-            self.output_text.insert(tk.END, "Proceso completado\n", "completion")
+            self.output_text.insert(tk.END, "\nPROCESO COProceso completado\n", "completion")
             self.output_text.see(tk.END)
             self.output_text.update()
             #self.completion_label.config(text="Proceso completado")
