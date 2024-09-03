@@ -21,8 +21,11 @@ class WhisperApp:
         select_button.pack(pady=10)
 
         # Cuadro de texto para la salida con tamaño 1280x720 px
-        self.output_text = tk.Text(self.root, width=128, height=45)  # Ajuste de tamaño basado en aproximación de píxeles
+        self.output_text = tk.Text(self.root, width=150, height=45)  # Ajuste de tamaño basado en aproximación de píxeles
         self.output_text.pack(pady=10)
+
+        # Fijar el tamaño del cuadro de texto
+        self.output_text.config(width=128, height=45)  # Ajuste aproximado para llegar a 1280x720
         
         # Etiqueta para el mensaje de finalización
         self.completion_label = tk.Label(self.root, text="", fg="green", font=("Arial", 12))
