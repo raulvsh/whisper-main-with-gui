@@ -64,10 +64,6 @@ def run_whisper_command(file_path, output_widget, on_completion):
     def execute():
         # Obtener el directorio del archivo de audio
         output_dir = os.path.dirname(file_path)
-        # Obtener el nombre del archivo sin la extensión
-        base_name = os.path.splitext(os.path.basename(file_path))[0]
-        # Definir el nombre del archivo de salida
-        output_file = os.path.join(output_dir, f"{base_name}.txt")
 
         command = [
             "whisper", 
@@ -88,11 +84,15 @@ def run_whisper_command(file_path, output_widget, on_completion):
 
             # Obtener la salida y los errores del proceso
             stdout, stderr = process.communicate()
+            #output_widget.insert("end", f"despues de communicate ${command}\n")
+
+
 
             # Insertar la salida estándar en el widget de salida
             if stdout:
                 output_widget.insert("end", stdout)
                 output_widget.see("end")  # Scroll al final
+                #output_widget.insert("end", "llego a salida estandar\n")
                 output_widget.update()
 
             # Insertar la salida de error en el widget de salida si la hay
@@ -109,12 +109,20 @@ def run_whisper_command(file_path, output_widget, on_completion):
 
         finally:
             # Asegúrate de que el proceso se cierre correctamente
+            output_widget.insert("end", "llego a finally\n")
+
             if process.poll() is None:  # Verifica si el proceso sigue en ejecución
                 process.terminate()  # Termina el proceso si aún está en ejecución
+                output_widget.insert("end", "llego a terminate\n")
+
 
             # Llama al callback de finalización
             if on_completion:
-                on_completion()
+                #on_completion()
+                output_widget.insert("end", "llego a on completion\n")
+                output_widget.after(0, on_completion)
+
+
 
     # Ejecuta en un hilo separado para no bloquear la GUI
     threading.Thread(target=execute).start()

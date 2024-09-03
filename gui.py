@@ -33,12 +33,11 @@ class WhisperApp:
         self.output_text.pack(pady=10, fill=tk.BOTH, expand=True)
 
         # Frame para el mensaje de finalización
-        self.completion_frame = tk.Frame(main_frame, bg="lightgray", height=80)  # Ajustado para ser más alto
-        self.completion_frame.pack(fill=tk.X, pady=(10, 10), side=tk.BOTTOM)
+        #self.completion_frame = tk.Frame(main_frame, bg="lightgray", height=80)  # Ajustado para ser más alto
+        #self.completion_frame.pack(fill=tk.X, pady=(10, 10), side=tk.BOTTOM)
         
-        # Etiqueta para el mensaje de finalización
-        self.completion_label = tk.Label(self.completion_frame, text="", fg="green", font=("Arial", 12), bg="lightgray")
-        self.completion_label.pack(pady=10, padx=10, anchor=tk.W, fill=tk.X)
+        # Configurar la etiqueta de estilo para el mensaje de finalización
+        self.output_text.tag_configure("completion", foreground="green", font=("Arial", 10, "bold"))
 
     def select_file(self):
         # Abrir explorador de archivos para seleccionar archivo de audio
@@ -55,9 +54,15 @@ class WhisperApp:
 
         # Define la función de callback para mostrar el mensaje de finalización
         def on_completion():
-            self.completion_label.config(text="Proceso completado")
+            self.output_text.insert(tk.END, "Proceso completado\n", "completion")
+            self.output_text.see(tk.END)
+            self.output_text.update()
+            #self.completion_label.config(text="Proceso completado")
         
         run_whisper_command(file_path, self.output_text, on_completion)
+
+    def update_completion_label(self):
+        self.completion_label.config(text="Proceso completado", fg="green")
 
     def run(self):
         self.root.mainloop()
